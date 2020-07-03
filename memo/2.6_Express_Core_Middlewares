@@ -1,0 +1,40 @@
+🔴nodemon 저장할때 서버가 두번실행되는 오류해결은?
+-package.json에 
+--------------------------------
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js"
+  },
+--------------------------------
+->
+--------------------------------
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js --delay 2"
+  },
+--------------------------------
+로 수정.
+이렇게하면 서버를 시작할때 babel이 완료 할 수 있을때까지 
+기다려 줄 수 있다.
+
+🔴middleware?
+-처리가 끝날때까지 연결되어 있는것
+-웹사이트에 접속하려고 할때 index.js 파일을 실행하고
+application이 route가 존재하는지 살펴봄
+index.js의(app.get("/", handleHome);)<-요부분
+"/"를 찾은다음, handleHome라는 함수를 실행
+그러면 handleHome(
+    const handleHome = (req, res) => res.send("Hello from my ass");
+)
+은 Hello from my ass를 출력...
+하지만 보통 연결은 유저와 마지막 응답사이 어떤것을 거치게됨
+그 사이에 존재하는게 middleware것을 middleware라고 함.
+
+🔴middleware 함수에 next 파라미터를 넣은후 넘겨주지 않으면 
+이후단계로 넘어갈 권한이 없다.
+--------------------------------
+const betweenHome = (req, res, next) => {
+  console.log("Between");
+  next();
+};
+--------------------------------
+
+🔴미들웨어 작동 순서가 중요! use할때 위치 알맞게 맞추자-!
