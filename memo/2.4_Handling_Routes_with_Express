@@ -1,0 +1,7 @@
+🔴함수에 응답받고 응답하려면 파라미터에 req, res를 넣자.
+ex)
+function handleHome(req, res) {
+  res.send("Hello from home");
+}
+
+app.get("/", handleHome);
