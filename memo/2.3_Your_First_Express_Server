@@ -6,3 +6,33 @@
 
 🔴git 등록할 git주소를 등록해주자 
 -git remote add origin https://github.com/812jay/wetube
+
+🔴git add .
+
+🔴git commit -m "Initial Commit"
+
+🔴git push origin master
+
+🔴"https://expressjs.com/" -> Guide -> Routing -> 
+내용들 복사해서 index.js 에다가 붙여넣기
+
+🔴require('something')
+-node module을 불러옴
+ex)require('express')
+ : express라는 이름의 폴더를 내 파일들에서 찾으려하고
+ 여기서 못찾으면 node_module 안에서 찾으려 한다.
+
+🔴somethig.listen(portNo) : localhost:portNo에서 반응 할 수 있도록 함
+
+🔴node index.js
+index.js 서버 가동
+
+🔴매번 node index.js 가동하기 싫으니까 package.json에 넣어서
+중앙 컨트롤 타워처럼 만들자.
+-package.json에 
+-------------------------------
+  "scripts": {
+    "start" : "node index.js"
+  }
+-------------------------------
+넣어주면 npm start 로 시작 할 수 있음
