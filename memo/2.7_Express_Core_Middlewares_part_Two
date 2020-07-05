@@ -1,0 +1,28 @@
+🔴morgan?
+-logging에 도움을 주는 package
+
+🔴logging?
+-어디서 무슨일이 일어났는지 기록하는 것
+
+🔴morgan 설치하자
+- npm install morgan
+
+🔴Helmet?
+-node.js 앱의 보안에 도움이되는 package
+
+🔴npm install helmet으로 helmet 설치
+
+🔴cookie-parser
+-cookie를 다루는 것을 도와주는 package
+-cookie parser github로 구글링
+-npm install cookie-parser
+
+🔴body-parser
+-body를 다루는 것을 도와주는 package
+-우리가 json을 전송한다면 bodyParser.json()
+-우리가 html form을 전송한다면 bodyParser.urlencoded()
+-body parser github로 구글링
+-npm install body-parser
+
+🔴middleware(app.use())를 거치고
+최종적으로 route에 도달한다.
