@@ -4,15 +4,10 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import { userRouter } from "./router";
 
 //express의 결과를 app에 저장
 const app = express();
-
-const PORT = 4000;
-
-//
-const handleListening = () =>
-  console.log(`Listening on : http://localhost:${PORT}`);
 
 const handleHome = (req, res) => res.send("Hello from my ass");
 
@@ -32,6 +27,6 @@ app.get("/", handleHome);
 */
 app.get("/profile", handleProfile);
 
-//localhost 4000번 포트로 실행
-//listening 하기 시작할때 함수 handleListening를 호출함
-app.listen(PORT, handleListening);
+app.use("/user", userRouter);
+
+export default app;
