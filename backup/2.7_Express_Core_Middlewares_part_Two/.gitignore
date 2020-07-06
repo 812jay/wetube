@@ -6,7 +6,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> a730b90f39675ac49e1d7e10eac6e60c6a42b8c8
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
