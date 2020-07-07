@@ -2,7 +2,7 @@
 
 🔴export default app;
 -누군가 내 파일을 불러올때(import) app Object를 주겠다는 의미
--default로 하면 파일을 export
+-default로 하면 해당 파일전체를 export
 -default가 아니라면 해당 변수만 export, { 명칭 } 으로 적어주면 된다.
 
 🔴init.js 내용 작성 후 package.json 에서 scripts -> start 변경해준다
