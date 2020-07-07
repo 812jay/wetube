@@ -19,7 +19,9 @@ import시 이름을 그대로 적어주면 되고
 🔴app.use
 -app의 전체를 사용하겠다는 의미.
 
-🔴
+🔴use
+-미들웨어를 응용 프로그램에 바인딩하기위한 것.
 
-🔴
+🔴get
+-Express의 일부. application routingGET HTTP 동사로 요청 될 때 특정 경로를 일치시키고 처리하기위한 것.
 
