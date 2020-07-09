@@ -1,0 +1,33 @@
+🔴join, login, logout은 URL경로는 global이지만 
+user controller에 속함
+
+🔴comments는 video와 밀접한 연관이 있기에 video controller에 속함
+
+🔴Router에서 함수를 Controller로 export 시키자
+
+🔴controller에서 export 해주면 
+router에서 별칭명 입력 시 경로를 자동 import 할 수 있다.
+
+🔴Router 사용예시
+-----------------------------------------------------
+const userRouter = express.Router();
+
+userRouter.get(routes.users, users);
+userRouter.get(routes.userDetail, userDetail);
+userRouter.get(routes.editProfile, editProfile);
+userRouter.get(routes.changePassword, changePassword);
+-----------------------------------------------------
+=>
+
+-----------------------------------------------------
+const userRouter = express.Router();
+
+userRouter.get(routes.users, users);
+userRouter.get(routes.editProfile, editProfile);
+userRouter.get(routes.changePassword, changePassword);
+userRouter.get(routes.userDetail, userDetail);
+-----------------------------------------------------
+router.get(경로, 함수)
+경로를 들어가면 함수를 호출,
+userDetail(/:id)이 먼저 오면 editProfile(/edit-profile)등을 입력해도 id로 인식해버린다.
+
