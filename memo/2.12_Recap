@@ -1,0 +1,14 @@
+🔴application관련 코드들은 app.js에 담겨있다.
+
+🔴cookieParser
+-cookie를 전달받아 사용할 수 있도록 만들어주는 미들웨어. 
+ex)사용자인증 에서의 쿠키검사
+
+🔴bodyParser
+-사용자가 웹사이트로 전달하는 정보들을 검사하는 미들웨어. 
+request 정보에서 form이나 json형태로 된 body를 검사한다.
+
+🔴helmet
+-application이 더 안전하도록 만들어 줌
+
+🔴Router의 모든 로직들은 Controller에 정의되어 있다.
