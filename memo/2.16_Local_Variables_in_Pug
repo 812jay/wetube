@@ -3,10 +3,5 @@
 
 🔴알파벳순으로 import하는 습관을 들이자.
 
-🔴
-
-🔴
-
-🔴
-
-🔴
+🔴app.js에 middleware를 추가하자.
+-res.locals를 통해 들어가는 routes에 변수를 전달한다.
