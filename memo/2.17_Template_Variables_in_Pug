@@ -1,0 +1,2 @@
+🔴res.render(template, template에 추가 할 정보가 담긴 객체)
+-res.render("home", { pageTitle: "home" })   
