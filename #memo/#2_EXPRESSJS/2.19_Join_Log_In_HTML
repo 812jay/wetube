@@ -1,0 +1,14 @@
+🔴Markdown : github에서 체크박스등 기능 나오도록 하는거. 설치하자.
+-marketplace에서 markdown all in one plugin 설치하면 됨.
+
+🔴markdown설치 후 priview로 미리보기하자.
+왼쪽아래 톱니바퀴에서 명령팔레트 클릭 후
+Markdown: Markdown priview .... 클릭.
+단축키로는 ctrl + shift + v
+
+🔴README.md에 페이지들 정리하자.
+
+🔴join, login 페이지 작업.
+
+🔴social button을 여러군데에서 사용하기 위해 partials안에 페이지 만들자.
+
