@@ -1,0 +1,45 @@
+🔴추가 정리
+  🚀모듈?
+    🍔독립된 기능을 갖는것(함수,파일)들의 모임
+  
+  🚀모듈 분류
+    🍔외장 모듈
+    일반 Node.js 개발자들이 만들어 놓은 모듈(라이브러리)입니다.
+    외장 모듈을 사용하기 위해서는 npm( Node Package Manager )을 사용합니다.
+    🍔내장 모듈
+    Node.js를 설치하고 나면 그 안에 이미 제공되어지는 모듈을 의미합니다.
+    내장 모듈은 이미 Node.js를 설치할 때 존재하기 때문에 npm을 사용하지 않습니다.
+  
+  🚀babel 모듈
+    🍕@babel/core : 핵심모듈
+    
+    🍕@babel/cli : 명령어 방식으로 transpile하여 특정 위치에 
+     결과파일을 얻기위해 사용
+    
+    🍕@babel/node : ES6 이상의 문법으로 작성된 코드를 바로 
+     node 런타임으로 실행하기 위해 사용
+    
+    🍕@babel/preset-env : babel을 transpile하기 위해 
+     필요한 여러 플러그인들을 사용하기 쉽게 모아둔 패키지모듈.
+  
+  🚀app.set(name, value)
+    🍕express의 property name과 사용할 value를 setting.
+  
+  🚀app.use([path,]callback [, callback...])
+    🍕지정된 path에 지정된 middleware 기능 혹은 기능을 마운트한다.
+    middleware 기능은 요청된 경로의 베이스가 경로와 일치할때
+    실행된다.
+
+  🚀var router = express.Router()
+    🍕새로운 Router객체를 만든다.
+    
+  🚀router.get(경로, 함수)
+    🍕해당경로로 함수를 보낸다.
+
+  🚀rendering
+    🍕html을 입력받아 출력장치(모니터)로 출력해 주는 작업
+
+  🚀res.render(view,[locals], callback)
+    🍕view : rendering해줄 view 파일
+    🍕local : view에 대한 local변수를 정의하는 속성을 가진 객체
+    🍕callback : callback함수
