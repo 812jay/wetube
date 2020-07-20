@@ -1,9 +1,7 @@
-import { videos } from "../db";
 //template, template에 추가 할 정보가 담긴 객체
 //videos: videos --> videos
-export const home = (req, res) => {
-  res.render("home", { pageTitle: "Home", videos });
-};
+export const home = (req, res) => res.render("home", { pageTitle: "Home" });
+
 export const search = (req, res) => {
   // const searchingBy = req.query.term;
   const {
