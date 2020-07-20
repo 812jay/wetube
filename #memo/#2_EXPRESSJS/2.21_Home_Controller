@@ -1,0 +1,18 @@
+🔴아직 실제 데이터가 없으므로 db.js에 가짜데이터를 
+넣어서 템플릿을 완성해보자.
+
+🔴id값이 안받아와지고 /:id 가 그대로 브라우저에 나오는 것을
+수정해보자
+
+🔴https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video
+에서 Examples 가서 https://archive.org/details/BigBuckBunny_124
+복사해와서 db.js에 video array안에 videoFile에 링크 붙여넣자.
+
+🔴db.js에서 export하고 videoController에서 db.js에 videos를 import한다.
+
+🔴view에서 videoController에서 뿌려논 videos를 한번씩 반복돌린다.
+(app.js에서 home 타고 globalRouter 에서 home 타고 올라가면 알 수 있음)
+each 밑에서 쓰일 변수명 in 위에 쓰이는 변수명
+--> 
+each item in videos
+    h1= item.title
