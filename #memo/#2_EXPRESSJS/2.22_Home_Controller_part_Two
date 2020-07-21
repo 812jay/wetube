@@ -1,0 +1,41 @@
+🔴mixin
+-웹 사이트에서 계속 반복되는 코드를 복사/붙여넣기 없이
+재활용하는법, pug함수의 일종
+
+🔴views폴더 안에 mixins 폴더생성
+
+🔴partials 는 HTML 항상 내용이 같은 블록개념이다.
+mixins는 다른 data가 오는 HTML..
+
+🔴
+-----------------------------------------------
+mixin videoBlock(video = {})
+    h1=video.title
+-----------------------------------------------
+
+mixin에 인자가 입력되면, 그 객체의 이름을 video라 한다.
+
+🔴videoBlock에 정보들을 입력하고 home에서 key 호출해서 사용.
+-----------------videoBlock--------------------
+mixin videoBlock(video = {})
+    h1=video.title
+    p=video.description
+--------------------home-----------------------
+block content
+    .videos
+        each item in videos
+            +videoBlock({
+                title: item.title,
+                description: item.description
+            })
+-----------------------------------------------
+
+🔴mixin을 사용하는 이유.. 다른정보, 같은구조
+
+🔴bigBuckBunny(?) 동영상링크 잘못됨
+db.js에 videoFile 밑에걸로 바꾸자.
+https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4
+
+🔴video를 자동으로 재생하고 싶다면 videoBlock.pug에서
+video.videoBlock__tumbnail(src=video.videoFile, controls=true)
+로 해놓자
