@@ -5,6 +5,7 @@ export const getJoin = (req, res) => {
 };
 
 export const postJoin = (req, res) => {
+  //req안에있는 body에서 name, email, password, password2를 가져옴.
   const {
     body: { name, email, password, password2 },
   } = req;
