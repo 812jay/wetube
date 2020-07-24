@@ -1,0 +1,30 @@
+🔴 windows10 CMD 어느경로에서든 mongod 명령어로 실행가능하도록 세팅해주자
+MongoDB 위치를 환경변수 path에 등록.
+"C:\Program Files\MongoDB\Server\4.0\bin"
+하고 VScode 재시작.
+(Ctrl+C로 server 안끄고 재시작 할 경우 포트 오류발생하므로 작업관리자에서 node.exe 종료해야함)
+
+🔴 MongoDB 설치 후 작동하는지 확인하기 위해 powershell에 mongod 입력해보자.
+
+🔴 그 후에 mongo 치면 들어갈 수 있고 exit치면 나갈 수 있다.
+
+🔴mongod와 mongo가 진행되면 다음단계로~
+
+🔴mongoDB를 js와 연결해보자. js에서 MongoDB와 연결하려면 Adapter를 통해야 함.
+js코드를 작성하고 싶으면 MongoDB로 부터 Instruction을 받아야 함.
+그걸 해주는게 바로 mongoose
+
+🔴npm install mongoose 로 설치하자.
+
+🔴설치 완료되었으면 임시로 만들어놓은 db.js의 내용들을 지우고 진짜 MongoDB를 연결하자.
+
+🔴일단 정리하면 MongoDB는 Database고 mongoose는 Database와 연결해 주는것.
+
+🔴mongoDB는 많은 Relationship이 필요없는 일반적인 프로젝트를 진행할때 좋다.
+ex) 채팅..
+생성이 매우 빠르고 엄격하지 않기 때문
+
+🔴같은 서버에서 다양한 종류의 DB를 사용 가능하다.
+
+🔴
+
