@@ -1,0 +1,87 @@
+🔴videoBlock.pug에 a태그를 추가하자
+----------------------------------------------------
+    .videoBlock
+        a(href=routes.videoDetail(video.id))
+            video.videoBlock__tumbnail(src=video.videoFile, controls=true)
+            h4.videoBlock__title=video.title
+            h6.videoBlock__views=video.views
+----------------------------------------------------
+
+🔴routes.js에 videoDetail도 함수니까
+videoRouter.js에서 
+----------------------------------------------------
+videoRouter.get(routes.videoDetail, videoDetail);
+------------------->>>>>>>>>------------------------
+videoRouter.get(routes.videoDetail(), videoDetail);
+----------------------------------------------------
+로 바꿔주자.
+
+🔴Logout 함 보자. Logout 클릭하면 Log Out 페이지로 가는것 대신
+로그아웃 처리를한 후 home 페이지로 redirect 하고 싶엉.
+userController.js에서 logout을 보자.
+
+🔴logout.pug 파일 필요없으니까 삭제.
+
+🔴upload "Cannot GET /upload"뜬다. 오류 찾아보자.
+-/videos/upload 로 이동해야는데 /upload 로 이동함.
+수정하자.
+
+🔴header.pug로 가서 /videos/upload로 가도록 href 수정하자
+----------------------------------------------------
+a(href=routes.upload) Upload
+------------------->>>>>>>>>------------------------
+a(href=`/videos${routes.upload}`) Upload
+----------------------------------------------------
+위 처럼 하면 upload페이지로 이동한다 :)
+
+🔴videoController.js에서 upload도 get post로 나눠주자
+
+🔴
+----------------------------------------------------
+export const upload = (req, res) =>
+  res.render("upload", { pageTitle: "Upload" });
+------------------->>>>>>>>>------------------------
+export const getUpload = (req, res) =>
+  res.render("upload", { pageTitle: "Upload" });
+export const postUpload = (req, res) => {
+  const {
+    body: { file, title, description },
+  } = req;
+};
+----------------------------------------------------
+
+🔴video 업로드할때를 생각해보자.
+그러면 video가 새로 생성되고. 생성된 데이터의 id를 가져온다.
+업로드 후에 사용사를 새로 생성된 video id에 해당하는
+videoDetail 페이지로 redirect할거임.
+사용자가 video 를 upload 하고 나면 새로운 id 반환받고,
+upload후에 사용자를 upload한 video의 videoDetail 페이지로 이동시킴.
+
+🔴videoController postUpload에 db.js에 저장된 video의 id값을 입력하자.
+export const postUpload = (req, res) => {
+  const {
+    body: { file, title, description },
+  } = req;
+  //To Do: Upload and save video
+  res.redirect(routes.videoDetail(324393));
+};
+
+🔴videoRouter에서 upload를 getUpload로 바꾸고 postUpload추가.
+import에도 추가.
+----------------------------------------------------
+videoRouter.get(routes.upload, upload);
+------------------->>>>>>>>>------------------------
+videoRouter.get(routes.upload, getUpload;
+videoRouter.get(routes.upload, postUpload);
+----------------------------------------------------
+
+🔴browser에서 Upload 에서 file하고 description 입력하고
+"Upload Video" 버튼 누르면 Video Detail로 넘어감.
+
+🔴이제 보안을 신경써보자. 정보 안입력하고 Upload Video 클릭해도
+상세페이지로 이동하고 있는데 잘못된거임.
+
+🔴upload.pug의 input tag들에 required=true 를 붙여주자
+
+🔴join.pug나 login.pug등의 나머지 필수입력이 필요한 
+template의 input tag들에도 마찬가지로 붙여주자.
