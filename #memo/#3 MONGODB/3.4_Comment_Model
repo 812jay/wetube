@@ -68,3 +68,4 @@ const VideoSchema = new mongoose.Schema({
 
 🔴Comment.js도 init.js에서 import해주쟈.
 
+🔴ObjectId는 객체생성시 자동으로 만들어 진다.
