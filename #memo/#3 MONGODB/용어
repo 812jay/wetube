@@ -1,0 +1,6 @@
+🔴db.on("error",function)
+: 에러가 발생했을때 함수를 발생시킨다.
+
+🔴db.once("open", function);
+: open했을때 한번만 함수를 실행.
+
