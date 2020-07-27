@@ -1,0 +1,28 @@
+import mongoose from "mongoose";
+
+const VideoSchema = new mongoose.Schema({
+  fileUrl: {
+    type: String,
+    //File URL이 없을때의 error 메시지
+    required: "File URL id required",
+  },
+  title: {
+    type: String,
+    //Title이 없을때의 error 메시지
+    required: "Title is required",
+  },
+  description: String,
+  views: {
+    type: Number,
+    default: 0,
+  },
+  createAt: {
+    type: Date,
+    //현재날짜
+    default: Date.now,
+  },
+});
+
+const model = mongoose.model("Video", VideoSchema);
+
+export default model;
