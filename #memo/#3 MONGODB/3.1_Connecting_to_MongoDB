@@ -13,8 +13,9 @@ mongoose.connect(
     {
         useNewUrlParser: true,
         useFindAndModify: false
+        useUnifiedTopology: true,
     }
-    );
+);
 -------------------------------------------
 우리에게 String으로 된 DB를 요청.
 
