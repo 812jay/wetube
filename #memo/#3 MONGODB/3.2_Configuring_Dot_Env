@@ -1,0 +1,29 @@
+🔴dotenv를 구성해보자.
+dotenv를 구성하기 위해선 .env 파일을 생성한다.
+('.' 다음 다른이름도 상관 없음)
+
+🔴'.env'에 URL이랑 PORT 입력후 db.js에 '.env'의 정보를 가져오자.
+
+🔴dotenv import 후 dotenv.config()라는 함수로 
+그 안의 정보를 불러올 수 있다.
+-----------------------------------------------
+import dotenv from "dotenv";
+dotenv.config();
+
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+});
+-----------------------------------------------
+
+🔴.gitignore에 .env 파일을 추가하자.
+(안하면 헛고생한거임.)
+
+🔴init.js 에 PORT도 이런식으로 나타내자.
+-----------------------------------------------
+import dotenv from "dotenv";
+dotenv.config();
+
+const PORT = process.env.PORT || 4000;
+-----------------------------------------------
