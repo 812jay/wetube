@@ -1,0 +1,70 @@
+🔴Comment에 대한 model을 만들어보자.
+
+🔴data를 정의할때 무언가 줄 option이 있다면 object형식으로,
+없다면 그냥 한줄로 만들면 됨.
+
+🔴data의 relationship
+video와 comment사이에 어떠한 관계가 있는데 어떻게 연관시킬까?
+comment에 video의 ID를 저장하거나 video가 ID의 array를 가지고 있거나.
+두가지 방법이 있다.
+1. 모든 Comment ID들을 array로 video에 집어넣을 것인가?
+comment에서 video ID를 지정
+comment를 생성하면 text와 createdAt을 생성하고 video ID는 1...
+-------------------Comment.js------------------------------------
+const CommentSchema = new mongoose.Schema({
+  text: {
+    type: String,
+    required: "Text is required",
+  },
+  createAt: {
+    type: Date,
+    default: Date.now,
+  },
+  video: {
+    type: mongoose.Schema.Types.ObjectId,
+    //ObjectId가 어느 model에서 왔는지
+    ref: "Video",
+  },
+});
+
+----------------------------------------------------------------
+2. Comment에 연결된 video ID를 줄 것인가?
+video에서 모든 comment ID가 담긴 array를 추가한다.
+모든 video들이 comment ID를 가지고 있게 함.
+댓글을 생성하면 새로운 comment ID를 video 안에있는 comment 의 list라는곳에 저장.
+------------------Video.js----------------------------------
+const VideoSchema = new mongoose.Schema({
+  fileUrl: {
+    type: String,
+    //File URL이 없을때의 error 메시지
+    required: "File URL id required",
+  },
+  title: {
+    type: String,
+    //Title이 없을때의 error 메시지
+    required: "Title is required",
+  },
+  description: String,
+  views: {
+    type: Number,
+    default: 0,
+  },
+  createAt: {
+    type: Date,
+    //현재날짜
+    default: Date.now,
+  },
+  commnets: [
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        //ObjectId가 어느 model에서 왔는지
+        ref: "Comment",
+    },
+  ]
+});
+----------------------------------------------------------------
+
+2번째걸로 가쟈.
+
+🔴Comment.js도 init.js에서 import해주쟈.
+
