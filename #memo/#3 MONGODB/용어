@@ -7,25 +7,24 @@
 🔴multerVideo.single("fileName");
 : 하나의 파일만 업로드 가능하다.
 
-🔴videoRouter.js 에 postUpload에 middleware자리에 uploadVideo 함수를 넣자.
-------------------------------------------------------------
-import { uploadVideo } from "../middlewares";
-videoRouter.post(routes.upload, uploadVideo, postUpload);
-------------------------------------------------------------
+🔴<input> 태그의 accept 속성
+form)
+<input type="file" accept="파일 확장자|audio/*|video/*|image/*|미디어 타입">
 
-🔴videoController에 
-------------------------------------------------------------
-export const postUpload = (req, res) => {
-  const { body } = req;
-  console.log(body);
-  //To Do: Upload and save video
-  res.render("upload", { pageTitle: "Upload" });
-  // res.redirect(routes.videoDetail(324393));
-};
-------------------------------------------------------------
-수정하고 브라우저에서 upload해보믄 multer가 자동으로 만든
-video 폴더와 파일이 생성된다.
+속성값)
+◎파일 확장자 : 
+닷(.)으로 시작되는 파일 확장자
+ex) .png, .jpg, .pdf, .hwp
 
-🔴
+◎audio/* : 
+모든 타입의 오디오 파일이 허용됨.
 
-🔴
+◎video/* : 
+모든 타입의 비디오 파일이 허용됨.
+
+◎image/* : 
+모든 타입의 이미지 파일이 허용됨.
+
+◎미디어 타입 :	 	
+매개변수(parameter)를 가지지 않는 유효한 미디어 타입
+
