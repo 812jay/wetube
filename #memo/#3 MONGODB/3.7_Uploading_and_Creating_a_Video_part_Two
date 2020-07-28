@@ -1,0 +1,28 @@
+🔴link가 망가져서 video가 나타나지 않고있다.
+
+🔴일단 video폴더 지우고
+
+🔴middleware.js에 'videos/'가 아닌 'uploads/videos/'에 업로드 하도록 수정
+(해당 위치가 내 project file 안에있는 directory라고 생각하기 때문에
+'/uploads/videos/' 이런식으로 쓰면 해당위치에 없다 생각하고 
+내 컴퓨터 root에 uploads를 새로 생성할거임)
+
+🔴video URL 수정 MongoDB에서 어떻게 다룰지 해보자.
+일단 videos 데이터들 지워보자.
+mongo-> help-> use we-tube-> show collections-> db.videos.remove({})
+
+🔴이제 바뀔 destination에 upload를 해보자.
+
+🔴주소가 망가져있음. express에선 uploads를 위한 기본적 route가 필요하지만 현재 route가 없음.
+
+🔴user에 해당하는 file을 내 server에 저장하는건 좋은 practice가 아니다.
+server의 코드는 영원한것 처럼 보이면 안됨.
+server를 만들고 새로운 version이 나오면 새로운 서버로 redirect만 시킨다.
+옛날서버와는 작별인사.
+
+🔴static file은 주로 Front-end에서 JavaScript나 CSS로고 file에 쓰임.
+그러나 user같은 생성된 content는 server와 분리 되어야 함.
+그러지 않는다면 어떤유저가 대용량 파일을 보내서 내 server를 막아 버릴 수 도 있다.
+이 file을 amazon cloud에 upload하고 amazon cloud에서 URL을 받아올거임.
+
+🔴upload directory를 gitignore에 추가하자.

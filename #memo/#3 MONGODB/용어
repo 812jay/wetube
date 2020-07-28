@@ -28,3 +28,7 @@ ex) .png, .jpg, .pdf, .hwp
 ◎미디어 타입 :	 	
 매개변수(parameter)를 가지지 않는 유효한 미디어 타입
 
+🔴express.static()
+: 주어진 directory에서 file을 전달하는 middleware function
+따라서 이 경우엔 어떤 종류의 controller나 view 같은건 확인하지 않음.
+file만 확인함.
