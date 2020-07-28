@@ -1,0 +1,75 @@
+🔴우선 videoController에서 Upload 하려 할 때 무슨일이 일어나는지 알아보자.
+--------------------------------------------------
+  console.log(file, title, description);
+--------------------------------------------------
+
+🔴DB에서 file 자체를 저장하지않는다. 그 file의 location을 저장하는거임.
+(file을 저장하면 엄청 무거워진다.)
+
+🔴우선 video가 아닌 file은 들어오지 못하게 하자.
+
+🔴file을 Upload하고 URL을 반환하는 middleware가 있어야 함.
+이 middleware는 multer라고 한다.
+
+🔴upload form의 enctype에 multipart/form-data 를 추가해야 한다.
+
+🔴npm install multer 설치하자.
+
+🔴middleware.js에 multer를 import하고 multer를 이용해
+destination 설정해준다음 export하자.
+----------------------------------------------------
+import multer from "multer";
+
+const multerVideo = multer({ dest: "videos/" });
+.....
+
+export const uploadVideo = multerVideo.single("videoFile");;
+----------------------------------------------------
+
+🔴multerVideo.single("videoFile");
+: 하나의 파일만 업로드 가능하다.
+
+🔴videoRouter.js 에 postUpload에 middleware자리에 uploadVideo 함수를 넣자.
+------------------------------------------------------------
+import { uploadVideo } from "../middlewares";
+videoRouter.post(routes.upload, uploadVideo, postUpload);
+------------------------------------------------------------
+
+🔴videoController에 
+------------------------------------------------------------
+export const postUpload = (req, res) => {
+  const { body, file } = req;
+  console.log(body, file);
+  //To Do: Upload and save video
+  res.render("upload", { pageTitle: "Upload" });
+  // res.redirect(routes.videoDetail(324393));
+};
+------------------------------------------------------------
+수정하고 브라우저에서 upload해보믄 multer가 자동으로 만든
+video 폴더와 파일이 생성된다.
+console로 file정보와 경로가 찍힘.
+
+🔴이젠 file을 form으로 부터 받아올 필요가 없다.
+
+🔴
+videoController.js
+------------------------------------------------------------
+export const postUpload = async (req, res) => {
+  const {
+    body: { title, description },
+    file: { path },
+  } = req;
+
+  const newVideo = await Video.create({
+    fileUrl: path,
+    title,
+    description,
+  });
+
+  console.log(newVideo);
+  //To Do: Upload and save video
+  res.redirect(routes.videoDetail(newVideo.id));
+};
+------------------------------------------------------------
+
+위와같이 수정되고 나면 업로드 후 URL에 video id가 찍히게 된다

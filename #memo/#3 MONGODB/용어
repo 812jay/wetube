@@ -4,3 +4,28 @@
 🔴db.once("open", function);
 : open했을때 한번만 함수를 실행.
 
+🔴multerVideo.single("fileName");
+: 하나의 파일만 업로드 가능하다.
+
+🔴videoRouter.js 에 postUpload에 middleware자리에 uploadVideo 함수를 넣자.
+------------------------------------------------------------
+import { uploadVideo } from "../middlewares";
+videoRouter.post(routes.upload, uploadVideo, postUpload);
+------------------------------------------------------------
+
+🔴videoController에 
+------------------------------------------------------------
+export const postUpload = (req, res) => {
+  const { body } = req;
+  console.log(body);
+  //To Do: Upload and save video
+  res.render("upload", { pageTitle: "Upload" });
+  // res.redirect(routes.videoDetail(324393));
+};
+------------------------------------------------------------
+수정하고 브라우저에서 upload해보믄 multer가 자동으로 만든
+video 폴더와 파일이 생성된다.
+
+🔴
+
+🔴
