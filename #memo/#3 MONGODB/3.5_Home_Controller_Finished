@@ -1,0 +1,15 @@
+🔴만든 model을 어떻게 사용?
+지금 home으로 가면 video가 정의되지 않아 undefined가 뜰것이다.
+
+🔴JS는 한번에 많은 일을 할 수 있다.
+
+🔴async
+:나를 기다려주는 무언가. JS는 default로 video를 살펴보지만 
+끝나기를 기다려주지 않는다.
+그렇기때문에 JS가 우리를 기다리게 하는 것.
+
+🔴await
+: async에서 이 과정이 끝날때까지 기달려달라 하는 것.
+error든 success든 끝나면 실행된다.
+그러므로 try catch 잡는게 좋음.
+await는 async없이는 쓸 수 없다.
