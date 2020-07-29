@@ -1,0 +1,22 @@
+🔴 deleteVideo는 get만 있으면 됨.
+비디오 삭제를 누르면 URL로 가서 이 부분의 URL을 가져와서
+해당하는 video를 삭제하고 끝 이므로 post 필요없음.
+
+🔴videoDetail Title에 video의 제목을 넣자!
+videoController에 videoDetail 수정
+---------------------------------------------------------------
+res.render("videoDetail", { pageTitle: "Video Detail", video });
+------------------>>>>>>>>>>>>---------------------------------
+res.render("videoDetail", { pageTitle: video.title, video });
+---------------------------------------------------------------
+
+🔴routes.js에 deleteVideo 함수로 변경하고 
+editVideo.pug에서 deleteVideo수정하자.
+------------------------------------------------------------------------------------------------------------------
+a.form-container__link.form-container__link--delete(href=`/videos${routes.deleteVideo}`) Delete Video
+-------------------->>>>>>>>--------------------------------------------------------------------------------------
+a.form-container__link.form-container__link--delete(href=routes.deleteVideo(video.id)) Delete Video
+------------------------------------------------------------------------------------------------------------------
+
+🔴videoController.js에 getEditVideo에서rendering 했기 때문에 
+editVideo.pug에선 video의 Object를 가지고 있다.
