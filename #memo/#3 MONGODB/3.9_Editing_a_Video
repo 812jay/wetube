@@ -34,7 +34,3 @@ action=`/videos${routes.editVideo(video.id)}`
 action=`${routes.editVideo(video.id)}`
 -----------------------------------------------
 이제 URL을 construct하고 있기 때문에 안지우믄 /video가 두번나옴.
-
-🔴
-
-🔴
