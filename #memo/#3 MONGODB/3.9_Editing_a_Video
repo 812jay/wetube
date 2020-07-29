@@ -1,0 +1,40 @@
+🔴routes.js의 editvideo를 함수로 수정하고 videoDetail.pug의 videoDetail의 href에 파라미터를 넣어주고
+브라우저에서 link 클릭하면 경로를 찾을 수 없을거임. Router 업데이트 아직 안했기 때문.
+
+🔴videoRouter.js에 routes.editVideo는 더 이상 String이 아니라 function이기때문에
+routes.editVideo() 로 수정한다.
+
+🔴videoController.js에서 getEditVideo, postEditVideo
+나눠고 videoRouter.js에서도 작업해주자.
+
+🔴videoController에서도 어떤 video를 수정하는지 알아야 하기 때문에
+URL을 받아야 한다.
+
+🔴getEditVideo에서는 template를 rendering 한다.
+내가 video를 edit할때면 수정할 게시물의 원래있던 제목과 설명으로 채워져있게하자...
+getEditVideo를 먼저 작업하자.
+
+🔴get은 뭔가 채워넣는 작업이고 post는 업데이트하고 
+redirect 하는 작업.
+
+🔴getEditVideo작업하자.
+id를 가져오고 그 다음 video를 가져오자고!
+
+🔴getEditVideo에서는 실패하믄 home으로 redirect
+성공하믄 페이지제목을 'Edit 제목', 비디오파일을 editVideo.pug로 넘겨준다.
+그리고 editVideo.pug에서 title과 description 값 지정.
+
+🔴확인해보면 title, description에 값 들어와 있고 페이지 title도
+title에 맞게 들어간 것을 확인.
+
+🔴editVideo.pug에서 form의 action 수정해주자
+-----------------------------------------------
+action=`/videos${routes.editVideo(video.id)}`
+-------------------->>>>>>---------------------
+action=`${routes.editVideo(video.id)}`
+-----------------------------------------------
+이제 URL을 construct하고 있기 때문에 안지우믄 /video가 두번나옴.
+
+🔴
+
+🔴
