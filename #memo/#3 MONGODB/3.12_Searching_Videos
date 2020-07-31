@@ -1,0 +1,44 @@
+🔴regex101.com의 정규표현식을 이용하여 search를 필터링하쟈.
+
+🔴videoController.js에 search 함수 어떠한 video도 찾지 못한다면 빈 배열로 render 되고
+   video를 찾는다면 찾은 videos로 reassign 하므로 const가 아닌 let사용
+----------------------------------------------------------------------
+    let videos = [];
+    try {
+        videos = await Video.find({
+        title: { $regex: searchingBy, $options: "i" },
+        });
+    } catch (error) {
+        console.log(error);
+    }
+----------------------------------------------------------------------
+$options에 i는 insensitive(대소문자 구분없음)
+
+🔴영상 안나왔을때 message띄워주도록 search.pug도 수정해주자.
+----------------------------------------------------------------------
+    .search__videos
+        if videos.length === 0
+            h5 No Videos Found
+        each item in videos
+            +videoBlock({
+                title: item.title,
+                views: item.views,
+                videoFile: item.videoFile
+            })
+----------------------------------------------------------------------
+
+🔴검색했을때 검색어가 포함된 영상은 나오고 아닌영상은 메시지가 뜬다.
+영상의 href보면 "/:id" 라고 뜨니까 search.pug에 videoBlock에 id도 호출하자.            
+    +videoBlock({
+        title: item.title,
+        views: item.views,
+        videoFile: item.fileUrl,
+        id:item.id
+    })
+
+🔴videoDetail에 댓글이 1개이면 comment, 아니면 comments라고 뜨도록!
+    .video__comments
+        if video.comments.length === 1
+            span.video__comment-number 1 comment
+        else
+            span.video__comment-number #{video.comments.length} comments 
