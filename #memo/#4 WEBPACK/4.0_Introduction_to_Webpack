@@ -1,0 +1,69 @@
+🔴webpack
+:module bundler이다.
+우리가 많은 파일들을(.hbs, .cjs, .sass ....) 가져와서 webpack에게 주면, webpack은 그것들을 
+완전히 호환이 되는 static 파일(.js, .css, .jpg, .png ...)들로 변환하여 브라우저가 알아들을 수 있도록 한다.
+
+🔴npm install webpack webpack-cli
+: webpack을 설치한다.
+webpack은 파일에서 webpack을 사용하기 위함,
+webpack-cli는 터미널에서 webpack을 쓸 수 있게 해준다.
+
+🔴webpack.config.js 파일을 생성해준다.
+
+🔴
+-------------------------package.json------------------------------------
+  "scripts": {
+    "start": "nodemon --exec babel-node init.js --delay 2"
+  },
+--------------------------->>>>>>>>>>>>----------------------------------
+  "scripts": {
+    "dev:server": "nodemon --exec babel-node init.js --delay 2",
+    "dev:assets": "webpack"
+  },
+-------------------------------------------------------------------------
+
+🔴webpack은 exported configuration object를 찾는다.
+webpack.config.js 에서 명심할 것은 server코드와는 연관 시키지 않는다.
+100% client code임.
+
+🔴dev:server의 babel-node는 아직 쓸 수 없음. 
+그러므로 webpack.config.js 에선 옛날 js를 써야함.
+
+🔴
+entry: 파일들이 어디에서 왔는가?
+output: 그 파일들을 어디에 넣을 것인가? 
+
+🔴폴더와 파일을 만들자.
+assets
+    ㄴjs
+        -main.js
+    ㄴscss
+        -styles.scss
+
+🔴styles.scss 에서 body에 설정넣어주고
+main.js에서 styles.scss를 import 해주자.
+
+🔴webpack.config.js 작성해보자.
+Node.js에는 파일과 디렉토리(경로)를 absolute로 만들어 주는 방법이 있다.
+다시말해, 컴퓨터나 서버에서의 전체 경로를 갖게 되는 것.
+ex) /users/jays/documents/wetube/assets
+
+🔴webpack.config.js는 모던 자바스크립트 파일이 아니라서 import를 쓸 수가 없다.
+
+🔴__dirname
+: 현재의 프로젝트 디렉토리 이름. 어디에서든 접근 가능한 Node.js 전역변수.
+
+🔴webpack.config.js에 entry와 output에 관한 변수를 만들자.
+
+🔴npm run dev:assets 실행해보면 error난다.
+output은 object여야 한다.
+webpack.config.js에서 output 수정해주자.
+-------------------------------------------------------------------------
+const config = {
+  entry: ENTRY_FILE,
+  output: {
+    path: OUTPUT_DIR,
+    filename: "[name].[format]",
+  },
+};
+-------------------------------------------------------------------------
