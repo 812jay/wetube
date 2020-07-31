@@ -1,0 +1,34 @@
+🔴우선 video 2개를 upload하자.
+
+🔴오래 된 video가 먼저 등장한다. 순서 바꾸어주자.
+videoController.js의 home을 수정
+----------------------------------------------------------
+const videos = await Video.find({});
+---------------------->>>>>>>>----------------------------
+const videos = await Video.find({}).sort({ _id: -1 });
+----------------------------------------------------------
+-1 주는건 위 아래 순서를 바꾸겠다는 약속같은거임.
+_id 순서대로 정렬하자.
+
+🔴search 해보자.
+browser에서 검색해보면 videos 가 정의되지 않았다 에러가 뜸.
+
+🔴search의 view는 video를 가지고 있지만 searchController때문에
+정의가 되지 않았다. ESLint에 대해 얘기할 타이밍!
+
+🔴ESLint
+코드에서 문제점을 검사하고 일부는 더 다은코드로 정정하는 도구중 하나.
+
+🔴npm install eslint -g
+eslint global하게 설치
+(이렇게 설치하지마!!)
+
+🔴-g 
+: 모든 프로젝트에서 사용가능.
+같은파일의 복사본은 계속 설치할 필요 없음.
+
+🔴eslint --init
+: eslint를 설정한다.
+
+🔴npm install eslint
+
