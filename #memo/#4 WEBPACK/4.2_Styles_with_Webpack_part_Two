@@ -1,0 +1,104 @@
+🔴webpack.config.js 의 rules가 의미하는건 webpack 실행할 때 마다.
+명시된 rule을 따르라는것.
+
+🔴
+------------------------------------------------------------------
+const ExtractCSS = require("extract-text-webpack-plugin");
+....
+
+const config = {
+  entry: ENTRY_FILE,
+  mode: MODE,
+  module: {
+    rules: [
+      {
+        test: /\.(scss)$/,
+        use: ExtractCSS.extract([
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "postcss-loader",
+          },
+          {
+            loader: "sass-loader",
+          },
+        ]),
+      },
+    ],
+  },
+  output: {
+    path: OUTPUT_DIR,
+    filename: "[name].[format]",
+  },
+};
+------------------------------------------------------------------
+-rules는 하나의 array다. config라는 object안에 있는 array.
+-먼저 상태(condition)를 시험(test)해보자.
+-test: /\.(scss)$/, : 파일을 만나면 그 파일이 scss인지 찾아봐(정규식을 써야함)
+-정규식은 따옴표로 시작하지 않는다.
+-scss파일을 찾았을때 그 파일을 CSS로 바꾸고 그 CSS에 해당하는 텍스트 전체를 취해서
+-그 텍스트를 추출해서 css파일로 저장
+-추출된 CSS를 분리된 하나의 파일로 만든다.
+-sass-loader : Sass 혹은 scss를 받아서 일반 CSS로 변환.
+-postcss-loader : CSS를 받아서 우리가 얘한테 주는 plugin을 가지고 CSS로 변환.
+ 호환성 관련일을 해결(prefix등 다양한것을 처리해줌)
+-css-loader : webpack이 css를 이해할 수 있게 해줌.
+
+🔴잘 호환되는 css가 불러와지면 우린 그부분만 텍스트를 추출해서 어디론가 보낸다.
+어디로 보낼지 지금 정하자.
+전 part에서 에러났던 "Can't resolve 'css-loader'" 오류에 대한 것 설치하자.
+
+🔴npm install css-loader postcss-loader sass-loader
+: css-loader, postcss-loader, sass-loader 설치
+
+🔴postcss
+: prefix등을 알아서 적용시켜 주는 tool
+ex)
+---------------------------------------------------------
+:fullscreen {
+}
+---------------------->>>>>>>>>--------------------------
+:-webkit-full-screen {
+}
+:-ms-fullscreen {
+}
+:fullscreen {
+}
+---------------------------------------------------------
+-webkit : 구글,크롬,사파리에서 돌아가도록 하는것
+
+🔴우린 Autoprefixer를 사용 할 것 https://github.com/postcss/autoprefixer 접속
+
+🔴npm install autoprefixer
+: autoprefixer 설치
+
+🔴webpack.config.js에 postcss-loader에 options 추가하자.
+
+🔴코드 유지보수를 위해서 browserslist 사용하자. 우리는 cover 99.5 사용.
+https://github.com/browserslist/browserslist
+
+🔴
+{
+    loader: "postcss-loader",
+    options: {
+        plugin() {
+        return [autoprefixer({ browsers: "cover 99.5%" })];
+        },
+    },
+},
+
+🔴다시 실행해보면 Error: "extract-text-webpack-plugin" loader is used without the corresponding plugin .... 에러.
+
+🔴webpack.config.js에 config에 
+------------------------------------------------
+  plugins: [new ExtractCSS("styles.css")],
+------------------------------------------------
+추가하자.
+
+🔴Cannot find module 'sass' 에러...
+
+🔴npm install node-sass 설치하자
+
+🔴아니다 위에꺼 안되고 걍 댓글에 있는걸로 했음.
+
