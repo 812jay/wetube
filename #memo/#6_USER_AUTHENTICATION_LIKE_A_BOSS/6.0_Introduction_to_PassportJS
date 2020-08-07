@@ -1,0 +1,23 @@
+⭕인증(authentication)을 위해 Passport라는 middleware를 사용해보자.
+브라우저상에 cookie를 설정해주면 쿠키를통해 사용자ID등을 알 수 있고,
+Passport가 브라우저에서 자동으로 cookie를 가져와서 인증이 완료된 
+user object를 controller에 넘겨준다.
+
+⭕Passport는 대부분의 다른 서비스들로 부터 인증을 받을 수도 있다.
+ex)github, google, spotify, instagram ....
+
+⭕cookie : 우리가 브라우저에 저장할 수 있는 것들
+
+⭕서버에 뭔가 요청할때마다(login, join, home ...) 브라우저가 그 쿠키들을 
+서버로 전송해 준다.
+그 때 Passport는 cookie를 생성하고, browser에 저장시켜주고, user에게 해당 cookie를 준다.
+
+⭕Passport-user-mongoose
+사용자 기능을 추가하는 User model을 위한 패키지.
+기본적인 사용자 인증이 필요한
+(Passport 변경, Passport 확인, Passport 생성, Passport 암호화 ....)
+
+⭕User라는 model을 만들자.
+/models/User.js
+
+⭕
