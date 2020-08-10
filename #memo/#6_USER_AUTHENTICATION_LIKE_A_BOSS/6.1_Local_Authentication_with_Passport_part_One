@@ -1,0 +1,67 @@
+⭕User.js 작업해보자.
+
+⭕User.js에서 mongoose를 import하자.
+
+⭕내가 email을 써서 로그인하려 하는데 알고보니 github계정으로도 가입한 것이 확인되면,
+소셜계정으로도 로그인 할 수 있을거라 알려줌.
+
+⭕userSchema를 만들자.
+avatarUrl은 fileUrl과 같은방식으로 구성될거임.
+(avatarUrl : 서버나 소셜계정의 프로필사진Url)
+
+⭕init.js에서 import하자
+
+⭕init.js에 passport는 기입되지 않았다.
+passport-local-mongoose를 쓸 것이기 때문.
+mongoose도 쓰고 mongoDB도 쓰고있는 나에게 딱 적합!
+passport를 통한 사용자 인증을 가능하게 해준다.
+(패스워드 설정, 확인 등등...)
+
+⭕npm install passport-local-mongoose
+passport-local-mongoose 설치
+
+⭕User.js에서 passport-local-mongoose를 import하자.
+
+⭕passport-local-mongoose는 Configuration Object가 필요하다.
+
+⭕main option중에 usernameField를 사용하자.
+
+⭕email을 username으로 설정하자.
+------------------------User.js--------------------------------------
+userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
+---------------------------------------------------------------------
+
+⭕passport.js를 생성하자.
+strategy등을 넣어줄거다.
+
+⭕일단 passport-local 설치하자.
+passport-local이란 username과 password를 쓰는 사용자 인증방식(strategy)을 의미함.
+---------------------------------------------------------------------
+npm i passport-local
+---------------------------------------------------------------------
+
+⭕passport.js에서의 strategy
+: 로그인 하는 방식, (facebook, github, username/password 로 로그인 하기 등등...)
+
+⭕passport-local-mongoose 로 인해 passport가 간단해진다!
+---------------------------------------------------------------------
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+------------------------->>>>>>>>>>---------------------------------
+passport.use(User.createStrategy());
+---------------------------------------------------------------------
