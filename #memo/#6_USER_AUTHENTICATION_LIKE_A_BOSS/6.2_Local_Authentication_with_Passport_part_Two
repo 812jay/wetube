@@ -1,0 +1,60 @@
+⭕serialization
+어떤정보를 쿠키에 주느냐?
+지금 웹브라우저(클라이언트)에 있는 사용자에 대해서, 어떤 정보를 가질 수 있느냐?
+어떤 field가 cookie에 포함 될 것인지 알려주는 역할.
+
+⭕쿠키는 아주 작아야 하고, 민감한 정보는 절대 담지 말자. 
+
+⭕deserializeUser
+어느사용자인지 어떻게 찾는가?
+
+⭕deserialize
+쿠키의 정보를 어떻게 사용자로 전환하는가
+
+⭕
+쿠키에는 오직 user.id만 담아서 보내라
+------------------passport.js-----------------------
+passport.serializeUser(User.serializeUser());
+----------------------------------------------------
+그다음 deserialize~
+------------------passport.js-----------------------
+passport.deserializeUser(User.deserializeUser());
+----------------------------------------------------
+
+⭕cookie에 id를 담고 그 id로 사용자를 식별하자.
+
+⭕routers 폴더에 있는 globalRouter를 열어보자.
+postJoin을 조금 수정할거임.
+왜냐하면 여기에 패스워드가 맞는지 체크하거나 하는 middleware가 하나 들어갈거임.
+
+⭕globalRouter와 userController보자.
+
+⭕userController에서 사용자 가입시키고 로그인도 해보자.
+
+⭕userController에서 User.js를 import
+
+⭕먼저 계정을 생성하고 이를 가입(register) 시킬거임.
+
+⭕userController에서 postJoin 수정하자
+----------------userController.js----------------------
+........
+
+  } else {
+    try {
+      const user = await User({
+        name,
+        email,
+      });
+      await User.register(user, password);
+    } catch (error) {
+      console.log(error);
+    }
+.......
+-------------------------------------------------------
+▲사용자 등록 로직
+
+⭕가입 후 mongo 에서 db.users.find({})로 찾아보자.
+mongo -> use we-tube -> db.users.find({})
+(다 지울땐 db.users.remove({}))
+
+⭕salt, hash는 password를 암호화 한것.
