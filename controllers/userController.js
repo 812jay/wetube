@@ -25,7 +25,6 @@ export const postJoin = async (req, res) => {
     // To Do: Log user in
     res.redirect(routes.home);
   }
-  res.render("join", { pageTitle: "Join" });
 };
 
 export const getLogin = (req, res) =>
