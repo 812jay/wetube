@@ -102,7 +102,7 @@ request(요청) Object에 할당함.
 ⭕
 req.user가 존재하지 않으면 null이됨.
 -----------------middleware.js-------------------
-  res.locals.user = req.user || {} || null;
+  res.locals.user = req.user || null;
 -------------------------------------------------
 
 ⭕내 서버를 잃거나 바꾸는 일이 있더라도 서버는 
