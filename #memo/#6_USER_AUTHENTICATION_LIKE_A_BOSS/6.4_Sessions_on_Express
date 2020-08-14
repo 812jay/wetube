@@ -1,0 +1,109 @@
+⭕express-session을 설치하자.
+npm install express-session
+
+⭕app.js에 session넣을건데 
+session엔 우리가 고려해야하는 옵션들이 있다.
+우리가 넣을건 일단 secret
+secret이란, 무작위 문자열로서, 쿠키에 들어있는 sessionID를 암호화
+하기 위한 것.
+
+⭕randomkeyzen.com 사이트에 들어가서 무작위로 생성된 문자열을
+복사해서(CodeIgniter Encryption Keys에서)
+.env에 넣어주자
+--------------------.env----------------------------
+COOKIE_SECRET = "VupQK3lqDaCu0QnzNK5KWDSlQZP8Znoy"
+----------------------------------------------------
+.env에 넣는 이유는 암호화코드를 암호화를 보면 알아 볼 수 있기때문에.
+
+⭕
+---------------------app.js-------------------------
+
+import passport from "passport";
+import session from "express-session";
+.....
+app.use(session({
+    process.env.COOKIE_SECRET,
+}));
+app.use(passport.initialize());
+.....
+----------------------------------------------------
+하고 밑에처럼 console찍어보고 암호화 값 넣은거 찍히는지 보자.
+---------------------app.js-------------------------
+const app = express();
+
+console.log(process.env.COOKIE_SECRET);
+----------------------------------------------------
+
+⭕resave 옵션 필요하다네? resave추가.
+resave : session을 강제로 저장~
+---------------------app.js-------------------------
+.....
+app.use(session({
+    process.env.COOKIE_SECRET,
+    resave: true,
+}));
+app.use(passport.initialize());
+.....
+----------------------------------------------------
+
+⭕saveUninitialized 필요하다네? saveUninitialized추가.
+saveUninitialized : 초기화(initialize)되지않은 session을 저장소에저장~
+---------------------app.js-------------------------
+.....
+app.use(session({
+    process.env.COOKIE_SECRET,
+    resave: true,
+    saveUninitialized: false,
+}));
+app.use(passport.initialize());
+.....
+----------------------------------------------------
+
+⭕OK! 사용자를 username으로 login 시킬 수 있을지 확인해보자.
+login하고 나서 
+F12 -> Application -> cookie -> localhost:4000
+-> connect.sid에 암호화 된 문자열 나오면 성공!
+위에 value가 암호화된 ID!
+내가 웹브라우저 새로고침 할 때마다(이 정보를 웹서버로 전송할때 마다)
+서버에서는 passport 인증과정을 호출하고 passport는 
+deserialize를 통해 내가 어느 사용자인지 식별 할 수 있게 된다.
+
+⭕근데 middleware에 문제가 있는 것 같으니 확인해보자.
+-------------------middleware.js------------------------
+....
+  res.locals.user = req.user || {};
+  console.log(req.user); <-추가
+....
+--------------------------------------------------------
+undefined가 뜬다. 로그아웃이 된거임...
+cookie 지우고 다시 로그인해보자.
+성공!
+
+⭕header가 안바뀐다.
+이제 isAuthenticated없으니까 바꿔주자.
+-------------------header.js----------------------------
+....
+        .header__column
+            ul
+                if !user <-요고
+                    li
+                        a(href=routes.join) Join
+....
+--------------------------------------------------------
+
+
+⭕passport를 통해 우리는 session을 이용한다.
+즉, session이 가진 쿠키를 이용함.
+session이 쿠키를 해독해주고 possport로 넘어가면
+deserialize로 사용자를 식별해주면
+passport는 방금 찾은 그 사용자를 middleware나 routes의
+request(요청) Object에 할당함.
+
+⭕
+req.user가 존재하지 않으면 null이됨.
+-----------------middleware.js-------------------
+  res.locals.user = req.user || {} || null;
+-------------------------------------------------
+
+⭕내 서버를 잃거나 바꾸는 일이 있더라도 서버는 
+어느사용자가 어느 쿠키를 가지고 있는지 기억해야 한다.
