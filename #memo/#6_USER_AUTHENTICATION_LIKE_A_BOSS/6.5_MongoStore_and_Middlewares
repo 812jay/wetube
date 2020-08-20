@@ -1,0 +1,93 @@
+⭕DB를 사용하여 세션을 저장해보자!
+
+⭕connect-mongo검색 npm홈페이지 들어가자.
+
+⭕설치하자
+npm i connect-mongo
+
+⭕
+--------------------app.js------------------------
+...
+import MongoStore from "connect-mongo";
+...
+//session object를 필요로 함
+const CookieStore = MongoStore(session);
+....
+  session({
+    ....
+    store: new CookieStore({ mongooseConnection: mongoose.connection }),
+  })
+...
+--------------------------------------------------
+
+⭕사용자가 login한 상태인데도 join페이지로 url찍으면 접속이된다. 
+이거 막아주는 middleware만들자.
+------------------middleware.js--------------------
+export const onlyPublic = (req, res, next) => {
+  if (req.user) {
+    res.redirect(routes.home);
+  } else {
+    next();
+  }
+};
+---------------------------------------------------
+
+⭕join이랑 login은 로그아웃된 사용자만 이용 가능함.
+------------------globalRouter.js--------------------
+
+globalRouter.get(routes.join, getJoin);
+globalRouter.post(routes.join, postJoin, postLogin);
+
+globalRouter.get(routes.login, getLogin);
+globalRouter.post(routes.login, postLogin);
+---------------------->>>>>--------------------------
+import { onlyPublic } from "../middlewares";
+....
+globalRouter.get(routes.join, onlyPublic, getJoin);
+globalRouter.post(routes.join, onlyPublic, postJoin, postLogin);
+
+globalRouter.get(routes.login, onlyPublic, getLogin);
+globalRouter.post(routes.login, onlyPublic, postLogin);
+-----------------------------------------------------
+
+⭕editProfile, changePassword 이 둘은 오직 사용자 전용이어야 함.
+middleware만들자.
+
+------------------userRouter.js--------------------
+export const onlyPrivate = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect(routes.home);
+  }
+};
+---------------------------------------------------
+
+⭕editProfile, changePassword, upload, editVideo, deleteVideo 사용자 전용으로
+------------------userRouter.js--------------------
+import { onlyPrivate } from "../middlewares";
+.....
+userRouter.get(routes.editProfile, editProfile);
+userRouter.get(routes.changePassword, changePassword);
+--------------------->>>>>-------------------------
+import { onlyPrivate } from "../middlewares";
+.....
+userRouter.get(routes.editProfile, onlyPrivate, editProfile);
+userRouter.get(routes.changePassword, onlyPrivate, changePassword);
+---------------------------------------------------
+
+------------------videoRouter.js--------------------
+import { uploadVideo } from "../middlewares";
+.....
+userRouter.get(routes.editProfile, editProfile);
+userRouter.get(routes.changePassword, changePassword);
+--------------------->>>>>-------------------------
+import { uploadVideo, onlyPrivate } from "../middlewares";
+.....
+//Edit Video
+videoRouter.get(routes.editVideo(), onlyPrivate, getEditVideo);
+videoRouter.post(routes.editVideo(), onlyPrivate, postEditVideo);
+
+//Delete Video
+videoRouter.get(routes.deleteVideo(), onlyPrivate, deleteVideo);
+---------------------------------------------------
