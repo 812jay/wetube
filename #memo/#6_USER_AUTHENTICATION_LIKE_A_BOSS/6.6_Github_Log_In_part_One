@@ -1,0 +1,56 @@
+⭕npm install passport-github
+설치하자
+
+⭕github개발자 페이지에서 application 등록하고
+passport 홈피에 나온 strategy도 작성해야 함.
+
+⭕github에 가서 application생성하자.
+https://github.com/settings/applications/new
+---------------------------------------------
+*Application name : WeTube
+
+*Homepage URL : http://localhost:4000/
+
+*Application description : 
+The best course in the world better than Harvard.
+
+*Authorization callback URL :
+http://localhost:4000/auth/github/callback
+---------------------------------------------
+위 정보 입력하고 Register하자.
+
+⭕등록하면 Client ID, Client Secret 등이 나옴.
+이거 써먹을거임.
+
+⭕
+
+----------------------passport.js--------------------------------
+......
+import GithubStrategy from "passport-github";
+import { githubLoginCallback } from "./controllers/userController";
+......
+passport.use(
+  new GithubStrategy({
+    clientID: process.env.GH_CLIENT_ID,
+    clientSecret: process.env.GH_CLIENT_SECRET,
+    callbackURL: "http://localhost:4000/auth/github/callback",
+  }),
+  githubLoginCallback
+);
+-----------------------------------------------------------------
+github으로 갔다오면서 사용자 정보를 가져오면 function을 실행.
+
+⭕
+사용자 정보를 전달받는 function
+--------------------userController.js------------------------------
+....
+export const githubLoginCallback = (accessToken, refreshToken, profile, cb) => {
+  console.log(accessToken, refreshToken, profile, cb);
+};
+
+export const logout = (req, res) => {
+  req.logout();
+  res.redirect(routes.home);
+};
+....
+-----------------------------------------------------------------
