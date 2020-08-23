@@ -1,0 +1,120 @@
+⭕
+github에 정보 보내주는 githubLogin 함수 만들어주자.
+---------------------userController.js-------------------------
+...
+export const githubLogin = passport.authenticate("github");
+....
+---------------------------------------------------------------
+
+⭕githubLogin을 위한 route생성
+------------------globalRouter.js------------------------------
+....
+const DELETE_VIDEO = "/:id/delete";
+
+const routes = {
+.....
+  userDetail: (id) => {
+    if (id) {
+      return `/users/${id}`;
+    } else {
+      return USER_DETAIL;
+    }
+  },
+.....
+  deleteVideo: (id) => {
+    if (id) {
+      return `/videos/${id}/delete`;
+    } else {
+      return DELETE_VIDEO;
+    }
+  },
+};
+------------------------>>>>>>>--------------------------------
+....
+const DELETE_VIDEO = "/:id/delete";
+
+//Github
+const GITHUB = "/auth/github";
+const GITHUB_CALLBACK = "/auth/github/callback";
+
+const routes = {
+.....
+  userDetail: (id) => {
+    if (id) {
+      return `/users/${id}`;
+    } else {
+      return USER_DETAIL;
+    }
+  },
+.....
+  deleteVideo: (id) => {
+    if (id) {
+      return `/videos/${id}/delete`;
+    } else {
+      return DELETE_VIDEO;
+    }
+  },
+  github: GITHUB,
+  githubCallback: GITHUB_CALLBACK,
+};
+---------------------------------------------------------------
+
+⭕
+-------------------------passport.js---------------------------
+passport.use(
+    ....
+    callbackURL: `http://localhost:4000/auth/github/callback`,
+  },
+  githubLoginCallback
+  ),
+);
+-------------------------->>>>>>>>>>---------------------------
+....
+import routes from "../../../routes";
+....
+
+passport.use(
+    ....
+    callbackURL: `http://localhost:4000/${routes.githubCallback}`,
+  }),
+  githubLoginCallback
+);
+---------------------------------------------------------------
+
+⭕
+-------------------userController.js---------------------------
+export const postGithubLogin = (req, res) => {
+  res.send(routes.home);
+};
+---------------------------------------------------------------
+
+⭕
+---------------------globalRouter.js---------------------------
+import {
+....
+  githubLogin,
+  postGithubLogIn,
+} from "../controllers/userController";
+....
+globalRouter.get(routes.github, githubLogin);
+
+globalRouter.get(
+  routes.githubCallback,
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  postGithubLogIn
+);
+---------------------------------------------------------------
+
+⭕
+----------------------socialLogin.pug-------------------------
+
+....
+    button.social-login--github
+        a(href=routes.github)
+....
+--------------------------------------------------------------
+
+
+⭕
+
+⭕
