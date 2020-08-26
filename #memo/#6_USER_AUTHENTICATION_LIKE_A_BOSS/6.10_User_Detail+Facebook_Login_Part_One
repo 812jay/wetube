@@ -1,0 +1,137 @@
+⭕http://localhost:4000/users/이상한주소
+들어갔을때 에러화면이 아닌 home으로 가게 해주자.
+
+⭕
+------------------------userController.js-----------------------------
+export const userDetail = (req, res) => 
+res.render("userDetail", { pageTitle: "User Detail"});
+------------------------------>>>>>-----------------------------------
+export const userDetail = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  try {
+    const user = await User.findById(id);
+    res.render("userDetail", { pageTitle: "User Detail", user });
+  } catch (error) {
+    res.redirect(routes.home);
+  }
+};
+----------------------------------------------------------------------
+
+⭕facebook인증을 해보자.
+developers.facebook.com 에서 애플리케이션 등록을 해야함.
+
+⭕
+새 앱 추가
+name : WeTube-Course
+email : yongje812@gmail.com
+-> facebook login ->set up -> Quick start -> 
+site URL : http://localhost:4000 -> continue -> 쭈욱 next
+->완료후 settings에서 App ID, SECRET CODE복사
+->.env 파일에 작성(FB_ID, FB_SECRET)
+
+⭕passport-facebook설치
+npm i passport-facebook
+
+⭕
+passport js 홈페이지에 facebook strategy 참조.
+---------------------------passport.js-------------------------------
+import FacebookStrategy from "passport-facebook";
+....
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.FB_ID,
+      clientSecret: process.env.FB_SECRET,
+      callbackURL: "http://localhost:3000/auth/facebook/callback",
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+        return cb(err, user);
+      });
+    }
+  )
+);
+--------------------------------------------------------------------
+
+
+⭕
+--------------------routes.js-----------------------
+const FB = "/auth/facebook";
+const FB_CALLBACK = "/auth/facebook/callback";
+    ...
+deleteVideo: (id) => {
+    ...
+facebook: FB,
+facebookCallback: FB_CALLBACK,
+----------------------------------------------------
+
+⭕
+----------------userController.js-------------------
+export const facebookLogin = passport.authenticate("facebook");
+
+export const facebookLoginCallback = (
+  accessToken,
+  refreshToken,
+  profile,
+  cb
+) => {
+  console.log(accessToken, refreshToken, profile, cb);
+};
+
+export const postFacebookLogin = (req, res) => {
+  res.redirect(routes.home);
+};
+----------------------------------------------------
+
+⭕
+-------------------globalRouter.js-------------------
+    ...
+  facebookLogin,
+  postFacebookLogin,
+} from "../controllers/userController";
+    ...
+globalRouter.get(routes.facebook, facebookLogin);
+globalRouter.get(
+  routes.facebookCallback,
+  passport.authenticate("facebook", { failureRedirect: "/login" }),
+  postFacebookLogin
+);
+-----------------------------------------------------
+
+⭕
+-----------------socialLogin.pug-----------------------
+    ...
+    button.social-login--facebook
+        span
+            i.fab.fa-facebook
+        |Continue with Facebook 
+--------------------->>>>>>>---------------------------
+    ...
+    button.social-login--facebook
+        a(href=routes.facebook)   
+            span
+                i.fab.fa-facebook
+            |Continue with Facebook 
+-------------------------------------------------------
+
+⭕
+---------------------passport.js-----------------------
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: process.env.FB_ID,
+      clientSecret: process.env.FB_SECRET,
+      callbackURL: `http://localhost:4000${routes.facebookCallback}`,
+    },
+    facebookLoginCallback
+  )
+);
+-------------------------------------------------------
+
+
+⭕
+
+⭕
+
