@@ -1,0 +1,101 @@
+⭕현재 join이나 login하면 넘어오는 정보도 있고 안넘어오는 정보도
+있다. 
+https://developers.facebook.com/ 에서
+개발중 OFF를 ON으로 바꿔놔야 함.
+
+⭕
+"앱을 라이브 상태로 변경하려면 올바른 개인정보처리 방침 URL을 입력해야 합니다."
+라고 뜬다면 귀찮게 하지 못하게 설정 -> 기본설정 ->개인정보 처리방침 URL
+에서 아래의 passport 링크를 넣고 저장해주자
+"http://www.passportjs.org/packages/passport-facebook/"
+그리고 라이브 상태로 변경.
+
+⭕앱 검수->내 권한 및 기능
+에서 email, default 있는지 보자.
+
+⭕버튼 눌러보면 또 안된다. http가 아니라 https여야되서.
+facebook mother fucker
+
+⭕npm install -g localtunnel
+global로 localtunnel 설치하자.
+(localtunnel: http로 시작하는 경로를 만들어줌)
+
+⭕"lt -h http://serverless.social -p 4000"
+설치 후 위 경로 실행 후 나오는 경로로 치면
+터널이 하나 만들어짐.
+https로 시작하는 주소가 뜬다.
+페이스북에게 내 웹사이트가 https로 보이게끔 하는것.
+실제로는 localtunnel을 이용하면 안되고 테스트니까
+사용해본거임.
+
+⭕
+scripts에 추가해 주자.
+-----------------------package.json---------------------------
+  "scripts": {
+        ....
+    "tunnel": "lt -h http://serverless.social -p 4000"
+        ....
+--------------------------------------------------------------
+("npm run tunnel" 로 실행)
+
+⭕뜨는 URL 들가서 facebook join 해보자.
+또 보안되지 않은 로그인 blahblah 또 안됨. facebook 엿먹어.
+
+⭕passport.js 에서 FacebookStrategy 에 callbackURL에 localtunnel에서
+생성된 https URL 넣어줘야 하지만 passport저장하면 localtunnel 취소되므로
+ngrok 사용하자.
+"npm i ngrok -g"
+ngrok 설치.
+
+⭕
+scripts도 변경
+-----------------------package.json---------------------------
+  "scripts": {
+        ....
+    "tunnel": "lt -h http://serverless.social -p 4000"
+        ....
+--------------------------->>>>-------------------------------
+  "scripts": {
+        ....
+    "ngrok": "ngrok http 4000"
+        ....
+--------------------------------------------------------------
+
+⭕ngrok에서 포워딩한 주소 나올거임.
+------------------------passport.js--------------------------
+  new FacebookStrategy(
+    {
+        ....
+         callbackURL: `포워딩주소${routes.facebookCallback}`,
+        ....
+-------------------------------------------------------------
+
+⭕그러고 다시 포워딩 URL 가서 join에 facebook 누르면 에러뜸
+URL을 읽어들일 수 없음 blahblah. facebook 똥처먹어.
+
+⭕
+https://developers.facebook.com/ 에서 facebook로그인->설정
+유효한 OAuth 리디렉션 URI 에 생성된 URI 등록 후 저장
+ex)https://7980f8942dbf.ngrok.io, https://7980f8942dbf.ngrok.io/auth/facebook/callbackURL
+
+⭕
+---------------------------passport.js--------------------------------------
+passport.use(
+  new FacebookStrategy(
+    {
+        ....
+    },
+        ....
+------------------------------>>>>-----------------------------------------
+passport.use(
+  new FacebookStrategy(
+    {
+        ....
+      profileFields: ["id", "displayName", "photos", "email"],
+      scope: ["public_profile", "email"],
+    },
+        ....
+---------------------------------------------------------------------------
+
+⭕화이트 리스트에 없다네. facebook 좆까.
+
