@@ -1,0 +1,11 @@
+⭕보기흉한 user profile 스타일을 바꿔주자.
+
+⭕home.pug에 있는 수많은 videoBlock들 없애고 한개만 남기자.
+그리고 등록한 video에 작성자가 없기때문에 다 삭제하고 
+video detail에서는 작성자만 edit video 버튼이 떠야함.
+
+⭕일단은 user profile에 버튼 두개 만들자.
+하나는 프로필수정, 다른 하나는 패스워드 변경.
+
+⭕미들웨어에서는 유저가 로그인 되어있으면 템플릿은 loggerUser를 준다.
+로그인 한 ID가 view가 찾은 ID랑 같은지 보자.
