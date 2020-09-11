@@ -1,0 +1,90 @@
+⭕Video Creator에 대한 내용 손보자.
+
+⭕db.videos.remove({})
+mongo에서 videos remove해주자.
+
+⭕upload 할때 user(작성자) 없이 upload 하기를 원하지 않는다.
+
+⭕
+model에 creator 관련 추가해주자.
+--------------------------video.js-----------------------------
+ const VideoSchema = new mongoose.Schema({
+     .......
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      //ObjectId가 어느 model에서 왔는지
+      ref: "Comment",
+    },
+  ],
+ creator: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+---------------------------------------------------------------
+
+--------------------------Comment.js----------------------------
+const CommentSchema = new mongoose.Schema({
+     .......
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+---------------------------------------------------------------
+
+--------------------------User.js-----------------------------
+const userSchema = new mongoose.Schema({
+     .......
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      //ObjectId가 어느 model에서 왔는지
+      ref: "Comment",
+    },
+  ],
+  videos: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Video",
+    },
+  ],
+---------------------------------------------------------------
+
+⭕videoController.js에서 누군가 업로드 했을때 creator는
+req.user.id와 같아야함.
+----------------------videoController.js-----------------------
+  const newVideo = await Video.create({
+      ....
+    creator: req.user.id,
+  });
+  req.user.videos.push(newVideo.id);
+  req.user.save();
+---------------------------------------------------------------
+
+⭕videoDetail에 username(creator) 표시하자.
+---------------------videoDetail.pug--------------------------
+          ....
+            if video.creator.id === loggedUser.id
+                a(href=routes.editVideo(video.id))
+                    button Edit video
+            h5.video__title=video.title
+          ....
+           .video__author
+                |Uploaded by 
+                a(href=routes.userDetail(video.creator.id))=video.creator.name
+---------------------------------------------------------------
+
+⭕Video.js에 creator 객체를 끌어오자.
+----------------------------videoController.js--------------------------
+export const videoDetail = async (req, res) => {
+  ....
+    const video = await Video.findById(id).populate("creator");
+  ....
+------------------------------------------------------------------------
+
+⭕브라우저에서 테스트해보면 videoDetail페이지에서 
+작성나 나오고 이름 클릭하면 작성자정보 나옴.
+작성자 본인 id면 사진, 닉네임, editProfile, changePassword 버튼 나오지만
+다른 id면 사진하고 닉네임만나옴.
