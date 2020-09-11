@@ -84,6 +84,10 @@ export const videoDetail = async (req, res) => {
   ....
 ------------------------------------------------------------------------
 
+*populate : ObjectId를 실제 객체로 치환
+https://www.zerocho.com/category/MongoDB/post/59a66f8372262500184b5363
+참조
+
 ⭕브라우저에서 테스트해보면 videoDetail페이지에서 
 작성나 나오고 이름 클릭하면 작성자정보 나옴.
 작성자 본인 id면 사진, 닉네임, editProfile, changePassword 버튼 나오지만
