@@ -1,0 +1,146 @@
+⭕videoDetail에서 작성자가 아니면 edit profile 버튼이 뜨지 않지만
+key값을 입력해서 주소창에 접속 할 경우 해당 게시물에 대한 edit profile에
+접근 할 수 있게된다. 
+위의 경우를 방지해보자.
+
+⭕
+작성자(video.creator)와 현재 접속한 user(req.user.id)의 id가 일치해야 edit profile에 접속 할 수 있도록 하자.
+*if에서 error 발생시키면 자동으로 catch로 가게 되어있다.
+----------------------------videoController.js-------------------------------
+export const getEditVideo = async (req, res) => {
+    ...
+    try {
+        const video = await Video.findById(id);
+        res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
+    ...
+    } catch (error) {
+    res.redirect(routes.home);
+  }
+------------------------------->>>>>>>---------------------------------------
+export const getEditVideo = async (req, res) => {
+    ...
+    
+    try {
+        const video = await Video.findById(id);
+        if (`video.creator` !== req.user.id) {
+            throw Error();
+        } else {
+        res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
+        }
+    catch (error) {
+        res.redirect(routes.home);
+    }
+    ...
+-----------------------------------------------------------------------------
+
+⭕
+delete video쪽에도 작성자만 삭제 할 수 있도록 적용
+----------------------------videoController.js-------------------------------
+export const deleteVideo = async (req, res) => {
+    ....
+  try {
+    await Video.findOneAndRemove({ _id: id });
+  } catch (error) {
+    console.log(error);
+  }
+  res.redirect(routes.home);
+};
+------------------------------->>>>>>>---------------------------------------
+export const deleteVideo = async (req, res) => {
+    ....
+  try {
+    const video = await Video.findById(id);
+    if (`${video.creator}` !== req.user.id) {
+      throw Error();
+    } else {
+      await Video.findOneAndRemove({ _id: id });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  res.redirect(routes.home);
+};
+-----------------------------------------------------------------------------
+
+⭕userDetail에서 우린 video를 얻어야 한다.
+console.log 해보자.
+-------------------------userController.js-----------------------------------
+  ....
+export const userDetail = async (req, res) => {
+  ....
+  
+  try {
+    ....
+    console.log(user);
+    ....
+-----------------------------------------------------------------------------
+그리고 videoController에 videoDetail에 있는 console.log 삭제
+
+⭕
+아래와같이 video에 들어갔을때 user정보를 불러온다.
+-------------------------------console.log-------------------------------------
+ { comments: [],
+  videos:
+   [ 5f68c5818773ed62bc501e4e],
+       ......
+------------------------------------------------------------------------------
+
+⭕
+userDetail에 user를 populate하자. mongoose는 videos가 objectId들의 array 인것을 안다.
+(User.js보면 알 수 있음)
+-------------------------------userController.js-------------------------------
+  ....
+export const userDetail = async (req, res) => {
+  ....
+  try {
+    const user = await User.findById(id).populate("videos");
+  ....
+-------------------------------------------------------------------------------
+
+후에 console.log 보면 video에 정보들이 다 담겨 있다.
+-------------------------------console.log-------------------------------------
+ { comments: [],
+  videos:
+   [ { views: 0,
+       comments: [],
+       _id: 5f68c5818773ed62bc501e4e,
+       fileUrl: 'uploads\\videos\\03d5e6ab3a15f6318382ff8dcbe2b401',
+       title: 'Big Buck Bunny2',
+       description: 'HI',
+       creator: 5f64130326fd21480cdd32dc,
+       createAt: 2020-09-21T15:23:45.494Z,
+       __v: 0 } ],
+       ......
+------------------------------------------------------------------------------
+
+⭕
+userDetail에 사용자가 upload한 video들 나오도록 아래와 같이 작성한다.(home에 있는거 복붙)
+------------------------------userDetail.pug----------------------------------
+  ....
+include mixins/videoBlock
+  ....
+        .home-videos
+            each item in user.videos 
+                +videoBlock({
+                    id:item.id,
+                    title:item.title,
+                    views:item.views,
+                    videoFile:item.fileUrl
+                })
+------------------------------------------------------------------------------
+
+위의 user는 userController에 userDetail에 있는 user이다.
+---------------------------userController.js----------------------------------
+
+export const userDetail = async (req, res) => {
+  try {
+    ....
+    res.render("userDetail", { pageTitle: "User Detail", user });
+    ....
+------------------------------------------------------------------------------
+
+⭕
+
+⭕
+
+⭕
