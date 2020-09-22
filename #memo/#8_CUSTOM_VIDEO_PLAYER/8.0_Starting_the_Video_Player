@@ -1,0 +1,62 @@
+⭕login 하지않고 videoDetail에 들어가려 하면 다음과같은 오류 발생
+---------------------------------------------------------------
+TypeError: C:\workspace\nomad\wetube\views\videoDetail.pug:8
+    6|             video(src=`/${video.fileUrl}`)
+    7|         .video__info
+  > 8|             if video.creator.id === loggedUser.id
+    9|                 a(href=routes.editVideo(video.id))
+    10|                     button Edit video
+    11|             h5.video__title=video.title
+
+Cannot read property 'id' of null
+----------------------------------------------------------------
+
+⭕
+아래처럼 하고 videoDetail들어가보면 들어가질거임.
+-------------------------videoDetail.pug------------------------
+    ....
+        .video__info
+            if loggedUser && video.creator.id === loggedUser.id
+    ....
+----------------------------------------------------------------        
+
+⭕이제 frontend 쪽을 작업해보자. 
+play, pause등 버튼 일단 만들고나서 기능적인 것을 작업 할 것.
+view/mixins/videoPlayer.pug 추가하자.
+
+⭕
+videoPlayer에 play, volume, expand 버튼 추가하기 위해 fontawesome 이용하자.
+-------------------------videoPlayer.pug------------------------
+mixin videoPlayer(video = {})
+    .videoPlayer
+        video(src=`/${video.src}`, autoplay)
+        .videoPlayer__controls
+            .videoPlayer__column
+                span
+                    i.fas.fa-volume-up
+                span
+                    | 00:00 / 10:00
+            .videoPlayer__column
+                span
+                    i.fas.fa-play
+            .videoPlayer__column
+                span
+                    i.fas.fa-expand
+----------------------------------------------------------------
+
+
+-------------------------videoDetail.pug------------------------
+    ....
+include mixins/videoPlayer
+    ....
+    .video-detail__container
+        +videoPlayer({
+            src:video.fileUrl
+        })
+        .video__info
+    ....
+----------------------------------------------------------------
+
+⭕player안에 시간이 보이게 css 수정해주자.
+assets/scss/partials/videoPlayer.scss 추가하고 styles.scss, styles.css 수정.
+기능은 담 시간에~
