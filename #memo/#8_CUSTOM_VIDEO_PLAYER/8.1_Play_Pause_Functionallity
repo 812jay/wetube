@@ -1,0 +1,12 @@
+⭕video 영상을 play 동작하게 해보자.
+
+⭕assets/js/videoPlayer.js 생성 후 video에 대한 function동작을 넣자.
+
+⭕videoPlayer.js에선
+해당 페이지에 video가 있을때 init을 실행,
+init 함수에선 play버튼 눌렀을때 handlePlayClick실행,
+handlePlayClick에선 video 정지상태에서 play버튼 누르면 실행,
+실행상태에선 정지 하도록 설정.
+
+
+⭕Mozilla Developer Networks(MDN)를 이용하면 js에대한 많은정보를 알 수 있다.
