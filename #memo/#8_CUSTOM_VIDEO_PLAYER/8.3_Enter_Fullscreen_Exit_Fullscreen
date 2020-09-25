@@ -1,0 +1,29 @@
+⭕Full Screen(전체화면)동작 작업해보자.
+
+⭕현재 video가 full Screen인지 아닌지 체크하는 기능이 아직 없기에
+전체화면, 축소화면 한번씩만 동작하는식으로 해서 만들자.
+(eventListener를 변경하고 제거해주는 방식)
+
+⭕full Screen은 videoPlayer가 아니라
+
+⭕
+full Screen상태에선 아이콘도 compress로 바꿔줘야함.
+
+
+⭕
+webkit : 구글 크롬에서 사용,
+moz : firefox
+ie, ms : ie나 ms
+
+⭕ 
+goFullScreen에서는
+videoContainer.webkitRequestFullscreen();
+으로 video를 full screen으로 전환 후 
+아이콘 compress로 변환,
+fullScrnBtn에 full screen 이벤트 없애고 exit full screen 이벤트
+넣어주고
+exitFullScreen에서는 
+아이콘 expand로 변경하고 
+fullScrnBtn 아이콘에 full screen 이벤트 추가,
+document.webkitExitFullscreen();
+으로 full screen 이벤트 없앤다.
