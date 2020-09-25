@@ -1,0 +1,21 @@
+⭕document is not defined 해결하기 위해서
+eslinttrc.js 환경설정해주자.
+
+⭕
+자동으로 " 붙는거 방지.
+----------------.eslinttrc.js-------------
+env: {
+    "browser": true
+}
+------------------------------------------
+
+⭕MDN사이트에서 read only가 아닌건 덮어쓰기 가능한 것.
+
+⭕
+play, pause는 
+videoPlayer.play(), videoPlayer.pause() 방식으로 제어하지만,
+muted는
+videoPlayer.muted = true, videoPlayer.muted = false
+방식으로 제어함. (mute는 boolean type method라 이렇게 제어 가능한듯)
+
+
