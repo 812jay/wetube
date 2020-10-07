@@ -1,0 +1,20 @@
+⭕영상이 끝날때를 알고싶다.
+  videoPlayer.addEventListener("ended");
+
+⭕영상이 다 끝나면 time을 처음으로 돌려놓고 pause상태로 만들거임.
+
+⭕handleEnded()함수 만들어서 currentTime 0으로 만들자.
+테스트를위해 init()에는 currentTime 끝나기 전으로 만들어놓자.
+
+⭕이제 문제점이 영상끝나고 처음으로 돌아가는데 play버튼은 pause로
+가만히 있다.(멈춘상태에서는 paly버튼이 play상태로 되어있어야 되니까)
+
+⭕handleEnded()에  
+playBtn.innerHTML = '<i class="fas fa-play"></i>';
+추가.
+
+⭕volume량 조절할 수 있게 바꾸자.
+우선 html, css부터 수정
+
+⭕videoPlayer.pug에 input(type="range") 추가해서 volume조절칸 만들자.
+    input.videoPlayer__volume#jsVolume(type="range", min="0", max="1", step="0.1" value="0.5")
