@@ -1,0 +1,22 @@
+⭕videoPlayer.pug에서 영상의 현재시간은 #currentTime, 
+전체시간은 #totalTime으로 id지정
+
+⭕videoPlayer.js에서 exitFullscreen(), goFullscreen()에서
+크롬,IE,firefox 등등에서 호환되도록 if else를 작성하자.
+
+⭕videoPlayer.js에 formatDate()에서 초단위로 이루어진 seconds를
+집어넣으면 시/분/초 포멧으로 변환해줌.
+
+⭕videoPlayer.js에서 setTotalTime()으로 전체시간, 
+getCurrentTime()으로 현재시간 불러옴.
+
+⭕setTotalTime에 전체시간 세팅이랑 현재기간 업데이트기능 있다.
+-setInterval(getCurrentTime, 1000);
+-videoPlayer.addEventListener("timeupdate", getCurrentTime);
+둘다 가능
+
+⭕
+init()에 
+videoPlayer.addEventListener("loadedmetadata", setTotalTime);
+이벤트 안먹는데 왜인지 모르겠다.
+
