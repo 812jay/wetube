@@ -1,0 +1,25 @@
+⭕volume량에 대한 function 만들어보자.
+handleDrag(event)로 동작. volume량 조절할때마다 event가 들어온다.
+
+⭕
+handleDrag(event)에 event.target찍어보면 해당 input tag 들어올거임.
+event.target.value면 현재 음량값이 들어옴.
+
+⭕volume 0.5로 해놔야 모바일에서도 될 수 있다.
+
+⭕mute했을때 volume이 0이 되고 unmute했을때 원래 volume량으로
+돌아와야 한다.
+function handleVolumeClick(){
+    if (videoPlayer.muted) {
+        ...
+        volumeRange.value = videoPlayer.volume;
+    } else {
+        ...
+        volumeRange.value = 0;
+    }
+
+⭕volume량이 top, middle, mute 에서 다른 아이콘을 갖게하자.
+
+⭕
+
+⭕
