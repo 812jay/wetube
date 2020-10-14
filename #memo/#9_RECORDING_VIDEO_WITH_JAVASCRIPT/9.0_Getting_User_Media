@@ -1,0 +1,44 @@
+⭕업로드 작업해보자. 업로드, video record(녹화) 등 할수 있게.
+우선 view를 수정해보자.(upload.pug)
+
+⭕record(녹화) 버튼 클릭하면 카메라가 보고있는 preview볼수있게.
+
+⭕
+upload페이지에 videoRecoder css작업하기 위해 
+assets/scss/partials/videoRecoder.scss 생성하자
+
+⭕이제 recorder 동작 설정해보자 stream을 카메라로부터 얻을거고
+그 stream을 video에 넣을거임.
+
+⭕assets/js/videoRecoder.js 생성하고
+assets/js/main.js에서 videoRecoder.js import하자.
+
+⭕upload.pug에 .record-container에 #jsRecordContainer로 id붙이고
+
+⭕recorder를 얻어와서 video에 넣음.video도 얻어야함.
+
+⭕videoRecorder.js에서 media를 user에서 얻어온다음 video에 넣기위해
+startRecording() 생성하자.
+그리고 video를 받아오기 위해 const videoPreview 생성.
+
+⭕startRecording() 에서 try catch로 접근권한 물어본다.
+
+⭕record못하게되면 클릭한 "Start Recording"버튼의 문구가
+can't record로 변하고, media에 접근 못하도록 막는다.
+
+⭕만약 접근허용한다면 const stream만드는데 
+user가 우리에게 접근하게 해 줄수 있을지
+기다려야 하기때문에 await해야한다.
+
+
+⭕media devicenavigator mdn 검색ㄱㄱ
+
+⭕마이크, 카메라 허용권한 물어봐야 하기 때문에
+onst stream에 audio, video true로 해준다.
+
+⭕videoPreview(record 미리보기)는 파일이 아닌 Object(객체)임.
+
+⭕videoPreview에 media값을 넣어주고 내 소리 안들리게 muted하고
+play하자.
+
+⭕const stream 안에 video 설정에서 videoPreview 크기 설정하자.
