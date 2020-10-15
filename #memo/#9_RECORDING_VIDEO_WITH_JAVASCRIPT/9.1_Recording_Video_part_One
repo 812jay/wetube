@@ -1,0 +1,24 @@
+⭕recording중엔 "start recording" 문구가 "stop recording"으로 바뀜.
+
+⭕finally(try,catch 암거나 실행됐을경우 실행)로 removeEventListener 옮기자.
+ 
+⭕startRecording을 getVideo라고 이름바꾸자.
+진짜 recording하는 함수가 아니기 때문.
+startRecording 따로 만들자.
+
+⭕startRecording()은 stream에서 가진 video를 recording하고 저장하는 역할.
+getVideo는 video를 얻어오는 역할일뿐 저장하지 않음.
+
+⭕전역변수로 streamObject선언해서 모든함수에서 접근 가능하게 하자.
+
+⭕MediaRecorder() : media를 record하는 함수.
+레코드하기 위해 mediaStream이 주어져야 한다.
+
+⭕videoRecorder console.log찍고 보자.
+
+⭕mimeType은 무료 오픈소스 포맷.
+
+⭕console.log 찍힌거 보믄 ondataavailable 이 null이다.
+handleVideoData에서 event받은후 videoRecorder.ondataavailable에
+넣어주고 start하자.
+
