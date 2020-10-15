@@ -22,3 +22,7 @@ getVideo는 video를 얻어오는 역할일뿐 저장하지 않음.
 handleVideoData에서 event받은후 videoRecorder.ondataavailable에
 넣어주고 start하자.
 
+⭕MediaRecorder() : media의 record를 볼 수 있게 도와줌.
+
+⭕navigator.mediaDevices.getUserMedia({ .... }) : 
+미디어 입력장치의 권한을 요청하며 수락시 mediaStream을 반환.
