@@ -1,0 +1,79 @@
+⭕dataavailable 이벤트는 레코딩이 멈췄을때 호출이 일어난다.
+한마디로 recording이 끝났을때 전체파일을 얻을 수 있다는 말.
+startRecording()안에 setTimeout에 5초후 stop() 뜨도록 추가하자.
+
+⭕"start recording"버튼 누르면 5초 후 BlobEvent console에 찍힘.
+
+⭕blob() 함수를 주기적으로 발생하게 하자.
+setTimeout지우고
+videoRecorder.start(1000);
+으로 설정하면 1초마다 BlobEvent 함수로 우리가 가진정보 console에 찍힘.
+
+⭕handleVideoData 안에 console.log(event.data)
+
+⭕blob은 0,1로 구성된 파일이다.
+
+⭕이제 우리가 할건 두가지이다.
+1.event.data 를 가져가서 array에 넣는것
+2.전체 파일을 마지막에 받는것 <--이걸로 하자.
+
+⭕video의 일부를 record하고 싶다면 두가지방법 있다.
+data를 초마다 받는법, recording 멈출때까지 기다리는것
+우리는 후자를 진행하자.
+const handleVideoData = (event) => {
+  console.log(event);
+};
+....
+const startRecording = async () => {
+  videoRecorder.start();
+}
+
+⭕recording이 끝났을때 data를 얻기위해 stopRecording() 만들자.
+
+⭕videoRecord 전역변수로 변경
+let videoRecorder;
+...
+const videoRecorder -> videoRecorder
+
+⭕recordBtn 눌렀을때 startRecording 이벤트 일어나도록 하자.
+
+⭕stopRecording() 갔을때 이전 stopRecording이벤트 없애고
+getVideo 일어나도록하고 recordBtn 문구 "startRecording"으로 변경.
+
+⭕startRecording후 stopRecording 할때 console에 BlobEvent가 들어온다.
+
+⭕BlobEvent안에 data : Blob이 바로 우리가 다운로드 할 영상임.
+
+⭕handleVideoData()에 녹화영상다운로드를 위해 설정해주자.
+
+⭕data file을 가지고있고 링크를하는데 a링크 element를 하나 생성하고
+생성한 element에 href경로를 위에 확인한 data로 담아준다.
+그후 다운로드하게 함.
+그리고 appendChild(link)를 document.body에 해준다음
+link.click()으로 조작클릭을 해줌.
+
+⭕테스트해보면 다운로드됨.
+video의 지속시간이 없는 오류가있음.
+
+⭕window라서 그런지는 모르겠지만 다운로드하면 영상이 까만색으로 되어있음.
+google에서 webm to mp4 검색해서 다운로드 된 파일 바꾸면 영상이 보인다.
+
+⭕참고로 stopRecording했을때 record화면 멈추게하는 코드는 아래의 함수를 추가하면 된다.
+
+function stopStreamedVideo(videoElem) {
+  const stream = videoElem.srcObject;
+  const tracks = stream.getTracks();
+
+  tracks.forEach(function (track) {
+    track.stop();
+  });
+
+  videoElem.srcObject = null;
+}
+
+....
+const stopRecording = () => {
+  ...
+  stopStreamedVideo(videoPreview);
+  ...
+}
