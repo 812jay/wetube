@@ -1,0 +1,43 @@
+⭕조회수 만들기위해 ajax이용하자.
+
+⭕ajax는 soap(simple object access protocol XML 베이스의 프로토콜)
+이 아니라 Asynchronouse JavaScript and XML 비동기 JS, XML통신임.
+
+⭕ajax하기전에 API작업하자. API는 어떤것도 렌더링하지 않는다.
+
+⭕routes.js에 api route경로 만들어준다.
+
+⭕/routers/apiRouter.js 생성.
+
+⭕app.js에 apiRouter 관련 생성.
+
+⭕videoController.js에서 postRegisterView() 생성해주고 apiRouter.js 에서 routing ㄱㄱ.
+
+⭕postRegisterView()는 video를 찾는다.
+
+⭕
+export const postRegisterView = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  console.log(req);
+  try {
+    const video = await Video.findById(id);
+    video.views += 1;
+    video.save();
+    //OK
+    res.status(200);
+  } catch (error) {
+    res.status(400);
+  } finally {
+    res.end();
+  }
+};
+
+*id : 해당 게시글 number ID
+*Video : videoSchema
+*video : Video(videoSchema)에 있는 views컬럼
+*video.save() : Video(videoSchema)에 저장
+*res.status(200) : 정상
+*res.status(400) : 잘못된 의미의 요청
+*res.end() : response종료
