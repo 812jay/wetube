@@ -1,0 +1,35 @@
+⭕add comment 진행해보자.
+
+⭕frontend로 가기전 backend부터. 일단 routes에 addComment 만들어주자.
+
+⭕videoController.js에 postAddComment() 만들어주자.
+try{}catch(error){}finally{}
+*try : id로 video얻고 newComment에 
+ comment내용이랑 creator(user.id) 담아서 comment생성
+ videoSchema에 comment id값 삽입 후 save
+*catch : 400에러(잘못된 요청)
+*finally : 끝내기
+
+⭕videoController.js에 comments추가
+
+export const videoDetail = async (req, res) => {
+    ...  
+    try {
+    const video = await (await Video.findById(id).populate("creator")).populate(
+      "comments"
+    );
+
+⭕생성된 video가 있으면 comment랑 creator도 가지고있는것임.
+얘내들 내용 가져오고 싶으면 populate하면 됨.
+
+⭕videoDetail.pug에 댓글 작성과 리스트란을 만들어주자.
+
+⭕정리
+videoController
+postAddComment() id는 url에서, comment는 body에서 가져옴.
+video를 찾고 newComment생성하고 그 newComment에 id를 
+video.comments에 넣어줌
+
+⭕backend는 모두 동작하는것이 같다.
+params: {id}, body:{comment}
+이건 우리가 form을 submit한것과 같이 동작함.
