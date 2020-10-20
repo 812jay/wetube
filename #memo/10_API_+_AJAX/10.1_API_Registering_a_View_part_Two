@@ -1,0 +1,18 @@
+⭕영상 보고난후 조회수가 올라가도록 작업해보자.
+
+⭕메뉴얼로 주는법은 fetch("URL")
+ex)fetch("http://localhost:4000/api/5f68c5818773ed62bc501e4e/view")
+
+⭕axios : HTTP request를 sexy하게 바꿔줌.
+
+⭕npm install axios
+설치하자.
+
+⭕videoPlayer에는 fetch를, comments는 axios를 사용하자.
+
+⭕videoPlayer.js에 registerView() 에서 video의 URL에서
+split하여 videoId를 구하자.
+
+⭕영상끝날때 조회수를 올리기위해 
+handleEnded()에서 registerView()를 호출.
+ 
