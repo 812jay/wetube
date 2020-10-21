@@ -1,0 +1,12 @@
+⭕이번엔 ajax로 보내보자!
+/assets/js/addComment.js
+
+⭕handleSubmit()에서 새로고침 막기위해 event.preventDefault();
+
+⭕
+
+⭕
+
+⭕
+
+⭕
