@@ -9,7 +9,6 @@ const increaseNumber = () => {
 };
 
 const addComment = (comment) => {
-  console.log(comment);
   const li = document.createElement("li");
   const span = document.createElement("span");
   span.innerHTML = comment;

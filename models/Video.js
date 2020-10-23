@@ -4,7 +4,7 @@ const VideoSchema = new mongoose.Schema({
   fileUrl: {
     type: String,
     //File URL이 없을때의 error 메시지
-    required: "File URL id required",
+    required: "File URL is required",
   },
   title: {
     type: String,
@@ -16,7 +16,7 @@ const VideoSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  createAt: {
+  createdAt: {
     type: Date,
     //현재날짜
     default: Date.now,
