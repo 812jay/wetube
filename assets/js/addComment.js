@@ -8,12 +8,19 @@ const increaseNumber = () => {
   commentNumber.innerHTML = parseInt(commentNumber.innerHTML, 10) + 1;
 };
 
-const addComment = (comment) => {
-  console.log(comment);
+const addComment = (commentId, comment) => {
   const li = document.createElement("li");
   const span = document.createElement("span");
+  // const deleteCommentBtn = document.createElement("div");
+  // const jsDeleteCommentBtn = document.createElement("button");
+  // deleteCommentBtn.setAttribute("class", "deleteCommentBtn");
+  // jsDeleteCommentBtn.textContent = "❌";
+  // jsDeleteCommentBtn.setAttribute("name", "jsDeleteComment");
+  // jsDeleteCommentBtn.setAttribute("id", commentId);
   span.innerHTML = comment;
   li.appendChild(span);
+  // li.appendChild(deleteCommentBtn);
+  // deleteCommentBtn.appendChild(jsDeleteCommentBtn);
   commentList.prepend(li);
   increaseNumber();
 };
@@ -27,8 +34,10 @@ const sendComment = async (comment) => {
       comment,
     },
   });
+  const commentId = response.data;
+  console.log(commentId);
   if (response.status === 200) {
-    addComment(comment);
+    addComment(commentId, comment);
   }
 };
 
