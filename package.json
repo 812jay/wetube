@@ -42,7 +42,8 @@
     "pug": "^3.0.0",
     "sass-loader": "^9.0.2",
     "webpack": "^4.36.1",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "yarn": "^1.22.10"
   },
   "scripts": {
     "dev:server": "nodemon --exec babel-node init.js --delay 2 --ignore '.scss' --ignore 'static' ",
