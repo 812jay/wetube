@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import passport from "passport";
 import mongoose from "mongoose";
 import session from "express-session";
+import path from "path";
 import MongoStore from "connect-mongo";
 import { localsMiddleware } from "./middlewares";
 import routes from "./routes";
@@ -27,9 +28,8 @@ console.log(process.env.COOKIE_SECRET);
 
 app.use(helmet());
 app.set("view engine", "pug");
-//"/uploads"로 가면 "uploads"라는 directory안으로 들어간다.
-app.use("/uploads", express.static("uploads"));
-app.use("/static", express.static("static"));
+app.set("views", path.join(__dirname, "views"));
+app.use("/static", express.static(path.join(__dirname, "static")));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
